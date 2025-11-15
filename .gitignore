@@ -1,0 +1,12 @@
+# Audio files (not redistributed, see README)
+*.wav
+
+# MATLAB
+*.asv
+*.mat
+*.mlx~
+slprj/
+
+# OS
+.DS_Store
+Thumbs.db
