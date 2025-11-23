@@ -95,6 +95,7 @@ title('Signal "plus rapide"')
 subplot(312),plot(f,abs(fftshift(fft(yrapide))))
 subplot(313),spectrogram(yrapide,128,120,128,Fs,'yaxis')
 
+pause(length(yrapide)/Fs); % Force à attendre que le son fini pour afficher les comparaisons
 %% === Comparaison des signaux (original / lent / rapide) ===
 
 figure(4);
@@ -133,12 +134,12 @@ Y_rap  = fftshift(abs(fft(yrapide)));
 
 plot(f_rap,  Y_rap /max(Y_rap),  'LineWidth', 1.2); hold on;
 plot(f_lent, Y_lent/max(Y_lent), 'LineWidth', 1.2);
-plot(f_orig, Y_orig/max(Y_orig), 'LineWidth', 1.2);
+plot(f_orig, Y_orig/max(Y_orig), 'LineWidth', 1.4);
 
 title('Spectre amplitude : original / lent / rapide');
 xlabel('Fréquence (Hz)');
 ylabel('Amplitude normalisée');
-legend('Original', 'Plus lent', 'Plus rapide');
+legend('Plus rapide', 'Plus lent', 'Original');
 grid on;
 
 %----------------------------------
@@ -232,6 +233,7 @@ title('Signal avec "pitch" diminué')
 subplot(312),plot(f,abs(fftshift(fft(ypitch2))))
 subplot(313),spectrogram(ypitch2,128,120,128,Fs,'yaxis')
 
+pause(length(ysomme)/Fs); % Force à attendre que le son fini pour afficher les comparaisons
 %% === Comparaison des signaux temporels (original / pitch augmenté / pitch diminué) ===
 
 figure(8);
@@ -268,7 +270,6 @@ Y_orig = fftshift(abs(fft(y)));
 Y_p1   = fftshift(abs(fft(ypitch1)));
 Y_p2   = fftshift(abs(fft(ypitch2)));
 
-% === ORDRE D’AFFICHAGE : du fond → avant-plan ===
 plot(f_p1, Y_p1/max(Y_p1), 'LineWidth', 1.2); hold on;       
 plot(f_p2, Y_p2/max(Y_p2), 'LineWidth', 1.2);                
 plot(f_orig, Y_orig/max(Y_orig), 'LineWidth', 1.4);          
@@ -283,7 +284,7 @@ grid on;
 %% 3- ROBOTISATION DE LA VOIX
 %-----------------------------
 % Choix de la fréquence porteuse (2000, 1000, 500, 200)
-Fc = 500; 
+Fc = 200; 
 
 yrob = Rob(y,Fc,Fs);
 
@@ -306,6 +307,7 @@ title('Signal "robotisé"')
 subplot(312),plot(f,abs(fftshift(fft(yrob))))
 subplot(313),spectrogram(yrob,128,120,128,Fs,'yaxis')
 
+pause(length(yrob)/Fs); % Force à attendre que le son fini pour afficher les comparaisons
 %% === Comparaison des signaux temporels (original / robotisé) ===
 
 figure(11);
