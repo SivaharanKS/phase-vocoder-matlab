@@ -347,3 +347,82 @@ xlabel('Fréquence (Hz)');
 ylabel('Amplitude normalisée');
 legend('Original', 'Robotisé');
 grid on;
+
+%----------------------------
+%% 4 - EFFET ECHO DE LA VOIX
+%-----------------------------
+yecho = effet_echo(y, Fs, 250, 0.6);
+
+% Ecoute
+%-------
+pause
+disp('------------------------------------')
+disp('4- SON "ECHO"')
+soundsc(yecho,Fs)
+
+figure(13);
+% --- Domaine temporel ---
+subplot(2,1,1);
+plot((0:length(y)-1)/Fs, y, 'LineWidth', 1.1); hold on;
+plot((0:length(yecho)-1)/Fs, yecho, 'LineWidth', 1.1);
+title('Signal temporel : original / echo');
+xlabel('Temps (s)'); 
+ylabel('Amplitude');
+legend('Original','Echo'); 
+grid on;
+
+% --- Spectre fréquentiel ---
+subplot(2,1,2);
+Y1 = fftshift(abs(fft(y)));
+Y2 = fftshift(abs(fft(yecho)));
+f  = (-length(Y1)/2:length(Y1)/2-1)*Fs/length(Y1);
+
+plot(f, Y1/max(Y1), 'LineWidth', 1.1); hold on;
+plot(f, Y2/max(Y2), 'LineWidth', 1.1);
+title('Spectre amplitude : original / echo');
+xlabel('Fréquence (Hz)'); 
+ylabel('Amplitude normalisée');
+legend('Original','Echo'); 
+grid on;
+
+%----------------------------
+%% 5 - EFFET : REVERSE
+%----------------------------
+yrev = effet_reverse(y);   % inversion du signal
+
+% Écoute
+%--------
+pause
+disp('------------------------------------')
+disp('5 - SON "REVERSE"')
+soundsc(yrev,Fs)
+
+figure(14);
+
+% --- Domaine temporel ---
+subplot(2,1,1);
+t = (0:length(y)-1)/Fs;
+plot(t, y, 'LineWidth', 1.1); hold on;
+plot(t, yrev, 'LineWidth', 1.1);
+
+title('Signal temporel : original / reverse');
+xlabel('Temps (s)'); 
+ylabel('Amplitude');
+legend('Original','Reverse');
+grid on;
+
+% --- Spectre fréquentiel ---
+subplot(2,1,2);
+
+Y_orig = fftshift(abs(fft(y)));
+Y_rev  = fftshift(abs(fft(yrev)));
+f = (-length(Y_orig)/2:length(Y_orig)/2-1) * Fs/length(Y_orig);
+
+plot(f, Y_orig/max(Y_orig), 'LineWidth', 1.1); hold on;
+plot(f, Y_rev /max(Y_rev),  'LineWidth', 1.1);
+
+title('Spectre amplitude : original / reverse');
+xlabel('Fréquence (Hz)');
+ylabel('Amplitude normalisée');
+legend('Original','Reverse');
+grid on;
